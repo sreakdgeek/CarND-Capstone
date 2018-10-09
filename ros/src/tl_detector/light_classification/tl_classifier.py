@@ -24,19 +24,19 @@ class TLClassifier(object):
         (im_width, im_height) = (image.shape[1], image.shape[0])
         return np.array(image.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
 
-    def __init__(self, is_sim):
+    def __init__(self, is_site):
 
         # Different models for simulator vs udacity parking lot
-	is_sim = True
 	self.threshold = 0.5
-        if (is_sim == True): 
+        if (is_site == False): 
+		print("Current path = " + os.getcwd())
 		print("Simulator is true hence running simulator inference graph")
-        	frozen_graph_path = '/home/workspace/team_rep3/CarND-Capstone/ros/src/tl_detector/light_classification/models/sim/frozen_inference_graph.pb'
-	elif (is_sim == False):
+        	frozen_graph_path = os.getcwd() + '/light_classification/models/sim/frozen_inference_graph.pb'
+	else:
 		print("Realworld is true hence running real world inference graph")
-        	frozen_graph_path = '/home/workspace/team_rep3/CarND-Capstone/ros/src/tl_detector/light_classification/models/real_world/frozen_inference_graph.pb'
+        	frozen_graph_path = os.getcwd() + '/light_classification/models/real_world/frozen_inference_graph.pb'
 
-        label_path = 'models/label.pbtxt'
+        label_path = os.getcwd() + '/light_classification/models/label.pbtxt'
 
         self.detection_graph = self.load_graph(frozen_graph_path)
         self.num_classes = 3   
