@@ -41,6 +41,7 @@ class TLDetector(object):
         rospy.loginfo('Creating traffic and image call backs.')
 
         sub3 = rospy.Subscriber('/vehicle/traffic_lights', TrafficLightArray, self.traffic_cb)
+
         sub6 = rospy.Subscriber('/image_color', Image, self.image_cb) # As suggested in walk through, classifier does need to see color scheme.
 
         config_string = rospy.get_param("/traffic_light_config")
@@ -49,7 +50,7 @@ class TLDetector(object):
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
 
         self.bridge = CvBridge()
-        self.light_classifier = TLClassifier()
+        self.light_classifier = TLClassifier(self.config['is_site'])
         self.listener = tf.TransformListener()
 
         self.state = TrafficLight.UNKNOWN
