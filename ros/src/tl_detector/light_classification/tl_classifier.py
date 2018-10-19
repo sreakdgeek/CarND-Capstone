@@ -28,7 +28,7 @@ class TLClassifier(object):
     def __init__(self, is_site):
         # Different models for simulator vs udacity parking lot
         sys.path.insert(0, '/home/neo/Downloads/ObjectDetectionAPI/models/research/object_detection')
-        self.threshold = 0.48
+        self.threshold = 0.5
         self.light_counter = 0
         if (is_site == False):
             print("Current path = " + os.getcwd())
