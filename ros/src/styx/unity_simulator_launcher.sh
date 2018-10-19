@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Script to launch the CarND Unity simulator
+set -x
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd -P && cd - > /dev/null)"
 USER_PROFILE="$THIS_DIR/profile.tmp"

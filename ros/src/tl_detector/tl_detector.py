@@ -13,7 +13,7 @@ import yaml
 from scipy.spatial import KDTree
 
 
-STATE_COUNT_THRESHOLD = 3
+STATE_COUNT_THRESHOLD = 2
 
 class TLDetector(object):
     def __init__(self):
@@ -101,8 +101,11 @@ class TLDetector(object):
             self.last_state = self.state
             light_wp = light_wp if state == TrafficLight.RED else -1
             self.last_wp = light_wp
+            print("light_wp to be published = " + str(light_wp))
+
             self.upcoming_red_light_pub.publish(Int32(light_wp))
         else:
+            print("last_wp to be published = " + str(self.last_wp))
             self.upcoming_red_light_pub.publish(Int32(self.last_wp))
         self.state_count += 1
 
