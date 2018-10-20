@@ -8,7 +8,43 @@
 
 This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
 
+capstone_big_picture.PNG  parking_lot_green.jpg  sim_out_green.jpg   traffic_light_node.PNG
+dbw_node.PNG                    parking_lot_red.jpg          sim_out_yellow.jpg  way_point_node.PNG
+
+[//]: # (Image References) 
+[image1]: ./readme_imgs/capstone_big_picture.PNG
+[image2]: ./readme_imgs/way_point_node.PNG
+[image3]: ./readme_imgs/traffic_light_node.PNG
+[image4]: ./readme_imgs/dbw_node.PNG
+[image5]: ./readme_imgs/sim_out_green.jpg
+[image6]: ./readme_imgs/sim_out_yellow.jpg
+[image7]: ./readme_imgs/parking_lot_red.jpg
+[image8]: ./readme_imgs/parking_lot_green.jpg
+
+# Introduction
+
+This project involves integrating components required to navigate a car in a simulator as well as a real car in parking lot area using perception, planning and control components.
+
+## System Architecture
+
+Below is high-level architecture diagram showing components and the interactions:
+
+![alt text][image1]
+
+ROS (Robot operating system) is used to design and develop the components of this project. ROS uses a pub-sub model architecture
+to design the interactions and information flow between the components. Key components of any self driving car are:
+
+1. Perception
+2. Planning 
+3. Control
+
+A self-driving car needs to perceive the world around it and recognize obstacles, traffic lights, plan its path and control the
+trajectory, speed and acceleration with which the car is moving. As part of this project, Waypoint loader and Waypoint Updater components are developed to plan the trajectory or way points along which the car will navigate. Based on the information received from the perception module, DBW (Drive By Wire) Node decides the velocity and the acceleration with which car needs to move. These modules are discussed in detail in below sections.
+## Components
+
 ### Waypoint Updater
+
+![alt text][image2]
 
 The waypoint_updater node is used to process the track waypoints from the track and provide the next waypoints for the vehicle to follow and adjust the speed depending on the traffic lights.
 
@@ -20,7 +56,38 @@ base_waypoints: Waypoints for the entire track.
 
 traffic_waypoint: Receives index from base_waypoints then waypoint updater uses this to calculate the distance between the vehicle and traffic light.
 
+## DBW Node
 
+![alt text][image4]
+
+## Traffic light detector
+
+![alt text][image3]
+
+Traffic light detector component is responsible for detecting if the upcoming waypoint is red signal and if so publish the nearest waypoint to the DBW node. From the set of waypoints that are ahead of the car, traffic light detector detects the color of the closest traffic signal ahead. It publishes the index of the red traffic light signal to the DBW node, which based on the distance to the waypoint decides on the velocity with which the car needs to move. Nearest neighbor approach is used to identify the
+closest waypoint to the car position and a classifier or object detector is used to localize and classify the color of the signal.
+
+### Traffic Light localization and classification
+
+Deep neural networks are really effective at classifying and localizing different types of objects such as traffic lights, vehicles, etc. We have explored different models such as using simple classifiers that only looks at pixel colors around approximate portion of traffic signals as well as using object detection models such as Mobilenet SSD, SSD Inception v2 etc. We have experimented and trained our models using Bosch Traffic Light data set, simulator traffic sign data and Udacity parking lot data. Eventually we created two models to detect and classify in simulator and parking lot. Below are the results:
+
+### Simulation Images
+
+![alt text][image5]
+![alt text][image6]
+
+### Parking lot Images
+
+![alt text][image7]
+![alt text][image8]
+
+### Video
+
+Below is the link to youtube video: 
+https://www.youtube.com/watch?v=UqqVkZbjg6Q&feature=youtu.be
+
+
+## Installation Instructions
 Please use **one** of the two installation options, either native **or** docker installation.
 
 ### Native Installation
