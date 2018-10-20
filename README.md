@@ -83,6 +83,10 @@ Deep neural networks are really effective at classifying and localizing differen
 Below is the link to youtube video: 
 https://www.youtube.com/watch?v=UqqVkZbjg6Q&feature=youtu.be
 
+# References
+
+https://medium.com/@anthony_sarkis/self-driving-cars-implementing-real-time-traffic-light-detection-and-classification-in-2017-7d9ae8df1c58
+
 
 ## Installation Instructions
 Please use **one** of the two installation options, either native **or** docker installation.
